@@ -39,9 +39,9 @@ use Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 class PageResource extends Resource
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $label = 'News';
-    protected static ?string $navigationLabel = 'Archivio News';
-    protected static ?string $pluralModelLabel = 'News';
+    protected static ?string $label = 'Articoli';
+    protected static ?string $navigationLabel = 'Archivio Articoli';
+    protected static ?string $pluralModelLabel = 'Articoli';
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function getModel(): string
