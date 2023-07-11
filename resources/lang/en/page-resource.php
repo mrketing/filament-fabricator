@@ -4,8 +4,8 @@ return [
     'labels' => [
         'blocks' => 'Aggiungi blocchi',
         'layout' => 'Layout',
-        'page' => 'Page',
-        'pages' => 'Pages',
+        'page' => 'News',
+        'pages' => 'News',
         'parent' => 'Parent',
         'slug' => 'Slug',
         'title' => 'Title',
