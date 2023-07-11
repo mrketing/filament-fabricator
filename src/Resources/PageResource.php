@@ -48,7 +48,6 @@ class PageResource extends Resource
     {
         return FilamentFabricator::getPageModel();
     }
-
     public static function form(Form $form): Form
     {
 
@@ -107,7 +106,7 @@ class PageResource extends Resource
                                     ])->disabled()->default('Feralpisalò Media house'),
 
 
-                                DateTimePicker::make('published_at')->label('Data e ora di pubblicazione'),
+                                DateTimePicker::make('published_at')->label('Data e ora di pubblicazione')->required(),
 
 
                                 TagsInput::make('tag')->separator(','),
@@ -170,6 +169,12 @@ class PageResource extends Resource
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('published_at')
+                    ->label(__('data di publicazione'))
+                    ->searchable()
+                    ->sortable(),
+
+
                 TextColumn::make('url')
                     ->label(__('filament-fabricator::page-resource.labels.url'))
                     ->toggleable()
@@ -186,8 +191,8 @@ class PageResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->formatStateUsing(fn ($state) => $state ?? '-')
                     ->url(fn (?PageContract $record) => filled($record->parent_id) ? PageResource::getUrl('edit', ['record' => $record->parent_id]) : null),
-            ])
 
+            ])
             ->actions([
                 ViewAction::make(),
                 EditAction::make(),
