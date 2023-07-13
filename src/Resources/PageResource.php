@@ -151,7 +151,7 @@ class PageResource extends Resource
                                 //     ->required(),
 
                                 Toggle::make('is_published')->label('Attivo'),
-                                Toggle::make('is_evidence')->label('In Evidenza')
+                                Toggle::make('is_evidence')->label('In Evidenza'),
 
                             ]),
 
