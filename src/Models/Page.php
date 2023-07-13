@@ -27,11 +27,14 @@ class Page extends Model implements Contract
         'paragrafo',
         'meta',
         'published_at',
+        'evidence_at',
         'categoria',
         'autore',
         'tag',
         'layout',
         'parent_id',
+        'is_published',
+        'is_evidence',
     ];
 
     protected $casts = [

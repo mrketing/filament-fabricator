@@ -150,7 +150,8 @@ class PageResource extends Resource
                                 //     })
                                 //     ->required(),
 
-                                Toggle::make('is_published')->label('Attivo')
+                                Toggle::make('is_published')->label('Attivo'),
+                                Toggle::make('is_evidence')->label('In Evidenza')
 
                             ]),
 
@@ -165,12 +166,12 @@ class PageResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
-                    ->label(__('filament-fabricator::page-resource.labels.title'))
+                    ->label(__('Titolo'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('published_at')
-                    ->label(__('data di publicazione'))
+                    ->label(__('Data di publicazione'))
                     ->searchable()
                     ->sortable(),
 
@@ -183,6 +184,7 @@ class PageResource extends Resource
                     ->visible(config('filament-fabricator.routing.enabled')),
 
                 BooleanColumn::make('is_published')->searchable()->label('Attivo')->default(false),
+                BooleanColumn::make('is_evidence')->searchable()->label('In Evidenza')->default(false),
 
 
 
