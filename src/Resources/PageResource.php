@@ -12,6 +12,8 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteBulkAction;
+
 use Filament\Forms\Components\TagsInput;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -34,7 +36,7 @@ use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Forms\Components\PageBuilder;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
-use Filament\Tables\Actions\DeleteBulkAction;
+
 
 class PageResource extends Resource
 {
@@ -184,9 +186,10 @@ class PageResource extends Resource
                     ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
                     ->visible(config('filament-fabricator.routing.enabled')),
 
+                TextColumn::make('categoria'),
+
                 BooleanColumn::make('is_published')->searchable()->label('Attivo')->default(false),
                 BooleanColumn::make('is_evidence')->searchable()->label('In Evidenza')->default(false),
-
 
 
                 TextColumn::make('parent.title')
@@ -206,14 +209,11 @@ class PageResource extends Resource
                     ->openUrlInNewTab()
                     ->color('success')
                     ->visible(config('filament-fabricator.routing.enabled')),
-                
             ])
             ->bulkActions([
                 DeleteBulkAction::make()
             ]);
-            
     }
-    
 
     public static function getLabel(): string
     {

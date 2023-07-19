@@ -1,67 +1,82 @@
 @props([
     'title' => null,
-    'dir' => 'ltr'
+    'meta' => null,
+    'dir' => 'ltr',
 ])
 
 <!DOCTYPE html>
-<html
-    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    dir="{{ $dir }}"
-    class="filament-fabricator"
->
-    <head>
-        {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.start') }}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $dir }}" class="filament-fabricator">
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="{{ $meta ? "{$meta} - " : null }} {{ config('app.name') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <link rel="stylesheet" href="https://use.typekit.net/wvg4ncf.css">
+    @vite(['resources/sass/_mediaqueries.scss', 'resources/sass/bootstrap/_functions.scss', 'resources/sass/_variables.scss', 'resources/css/app.css', 'resources/sass/app.scss', 'resources/css/fontawesome.min.css', 'resources/js/app.js', 'resources/js/custom.js', 'resources/css/bootstrap-grid.css'])
+    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.start') }}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon-32x32.png') }}" type="image/x-icon">
+    @foreach (\Filament\Facades\Filament::getMeta() as $tag)
+        {{ $tag }}
+    @endforeach
+    @if ($favicon = \Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getFavicon())
+        <link rel="icon" href="{{ $favicon }}">
+    @endif
+    <title>{{ $title ? "{$title} - " : null }} {{ config('app.name') }}</title>
 
-        @foreach (\Filament\Facades\Filament::getMeta() as $tag)
-            {{ $tag }}
-        @endforeach
 
-        @if ($favicon = \Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getFavicon())
-            <link rel="icon" href="{{ $favicon }}">
+    <style>
+        [x-cloak=""],
+        [x-cloak="x-cloak"],
+        [x-cloak="1"] {
+            display: none !important;
+        }
+    </style>
+
+
+    @foreach (\Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getStyles() as $name => $path)
+        @if (\Illuminate\Support\Str::of($path)->startsWith('<'))
+            {!! $path !!}
+        @else
+            <link rel="stylesheet" href="{{ $path }}" />
         @endif
+    @endforeach
 
-        <title>{{ $title ? "{$title} - " : null }} {{ config('app.name') }}</title>
+    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.end') }}
+</head>
 
+<body class="filament-fabricator-body">
+    @include('partials.header')
+    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.start') }}
 
-        <style>
-            [x-cloak=""], [x-cloak="x-cloak"], [x-cloak="1"] { display: none !important; }
-        </style>
+    {{ $slot }}
 
+    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.scripts.start') }}
 
-        @foreach (\Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getStyles() as $name => $path)
-            @if (\Illuminate\Support\Str::of($path)->startsWith('<'))
-                {!! $path !!}
-            @else
-                <link rel="stylesheet" href="{{ $path }}" />
-            @endif
-        @endforeach
+    @foreach (\Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getScripts() as $name => $path)
+        @if (\Illuminate\Support\Str::of($path)->startsWith('<'))
+            {!! $path !!}
+        @else
+            <script defer src="{{ $path }}"></script>
+        @endif
+    @endforeach
 
-        {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.end') }}
-    </head>
+    @stack('scripts')
 
-    <body class="filament-fabricator-body">
-        {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.start') }}
+    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.scripts.end') }}
 
-        {{ $slot }}
+    {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.end') }}
+    @include('partials.footer')
+</body>
 
-        {{ \Filament\Facades\Filament::renderHook('filament-fabricator.scripts.start') }}
-
-        @foreach (\Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getScripts() as $name => $path)
-            @if (\Illuminate\Support\Str::of($path)->startsWith('<'))
-                {!! $path !!}
-            @else
-                <script defer src="{{ $path }}"></script>
-            @endif
-        @endforeach
-
-        @stack('scripts')
-
-        {{ \Filament\Facades\Filament::renderHook('filament-fabricator.scripts.end') }}
-
-        {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.end') }}
-    </body>
 </html>

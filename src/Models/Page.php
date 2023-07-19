@@ -58,6 +58,8 @@ class Page extends Model implements Contract
         return $this->hasMany(Page::class, 'parent_id');
     }
 
+    
+
     public function allChildren(): HasMany
     {
         return $this->children()->select('id', 'slug', 'title', 'parent_id')->with('children:id,slug,title,parent_id');
