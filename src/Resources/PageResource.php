@@ -34,12 +34,13 @@ use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Forms\Components\PageBuilder;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
-
+use Filament\Tables\Actions\DeleteBulkAction;
 
 class PageResource extends Resource
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $label = 'Articoli';
+    protected static ?string $label = 'test';
+
     protected static ?string $navigationLabel = 'Archivio Articoli';
     protected static ?string $pluralModelLabel = 'Articoli';
     protected static ?string $recordTitleAttribute = 'title';
@@ -205,9 +206,14 @@ class PageResource extends Resource
                     ->openUrlInNewTab()
                     ->color('success')
                     ->visible(config('filament-fabricator.routing.enabled')),
+                
             ])
-            ->bulkActions([]);
+            ->bulkActions([
+                DeleteBulkAction::make()
+            ]);
+            
     }
+    
 
     public static function getLabel(): string
     {
