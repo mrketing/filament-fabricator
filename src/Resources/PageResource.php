@@ -74,12 +74,12 @@ class PageResource extends Resource
 
                         Select::make('categoria')
                             ->options([
-                                'Prima squadra' => 'Prima squadra',
-                                'Settore giovanile' => 'Settore giovanile',
-                                'Società' => 'Società',
-                                'Biglietti' => 'Biglietti',
-                                'Partner' => 'Partner',
-                                'Progetti speciali' => 'Progetti speciali',
+                                'prima-squadra' => 'Prima squadra',
+                                'settore-giovanile' => 'Settore giovanile',
+                                'societa' => 'Società',
+                                'biglietti' => 'Biglietti',
+                                'partner' => 'Partner',
+                                'progetti-speciali' => 'Progetti speciali',
                             ])->required(),
 
 
