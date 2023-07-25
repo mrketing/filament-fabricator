@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\FileUpload;
 
 use Filament\Forms\Components\TagsInput;
 use Filament\Resources\Resource;
@@ -72,6 +73,8 @@ class PageResource extends Resource
                         TextInput::make('sottotitolo')->required(),
 
 
+                        
+
                         Select::make('categoria')
                             ->options([
                                 'Prima squadra' => 'Prima squadra',
@@ -112,7 +115,7 @@ class PageResource extends Resource
                                 DateTimePicker::make('published_at')->label('Data e ora di pubblicazione')->required(),
 
 
-                                TagsInput::make('tag')->separator(','),
+                                TagsInput::make('tag')->label('Tag')->separator(','),
 
 
 
@@ -155,7 +158,15 @@ class PageResource extends Resource
 
                                 Toggle::make('is_published')->label('Attivo'),
                                 Toggle::make('is_evidence')->label('In Evidenza'),
+                                FileUpload::make('immagine_evidenza')->image()->label('Immagine evidenza')->required()
+                                    ->imageResizeTargetWidth('1920')
+                                    ->imageResizeTargetHeight('1920')
+                                    ->imageResizeMode('contain'),
 
+                    FileUpload::make('immagine_banner')->image()->label('Img banner')->required()
+                    ->imageResizeTargetWidth('1920')
+                    ->imageResizeTargetHeight('1920')
+                    ->imageResizeMode('contain'),
                             ]),
 
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('sidebar.after')),

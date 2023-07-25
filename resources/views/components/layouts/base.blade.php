@@ -35,6 +35,7 @@
     <title>{{ $title ? "{$title} - " : null }} {{ config('app.name') }}</title>
 
 
+    
     <style>
         [x-cloak=""],
         [x-cloak="x-cloak"],
