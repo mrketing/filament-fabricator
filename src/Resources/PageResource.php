@@ -158,15 +158,10 @@ class PageResource extends Resource
 
                                 Toggle::make('is_published')->label('Attivo'),
                                 Toggle::make('is_evidence')->label('In Evidenza'),
-                                FileUpload::make('immagine_evidenza')->image()->label('Immagine evidenza')->required()
+                                FileUpload::make('immagine_evidenza')->image()->label('Immagine evidenza (Risoluzione minima consigliata 1920x1080) ')->required()
                                     ->imageResizeTargetWidth('1920')
                                     ->imageResizeTargetHeight('1920')
                                     ->imageResizeMode('contain'),
-
-                    FileUpload::make('immagine_banner')->image()->label('Img banner')->required()
-                    ->imageResizeTargetWidth('1920')
-                    ->imageResizeTargetHeight('1920')
-                    ->imageResizeMode('contain'),
                             ]),
 
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('sidebar.after')),
