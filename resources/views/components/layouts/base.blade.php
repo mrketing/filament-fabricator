@@ -4,6 +4,14 @@
     'dir' => 'ltr',
 ])
 
+@php
+     $pages = DB::table('pages')
+            ->where('is_published', true)
+       
+            ->orderBy('published_at', 'desc')
+            ->get();
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $dir }}" class="filament-fabricator">
 
@@ -12,11 +20,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    @foreach ($pages as $page)
     <meta content="{{ $meta ? "{$meta} - " : null }} {{ config('app.name') }}">
+    @endforeach
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <meta property="og:image" content="{{ $page->immagine_evidenza }}" />
+    
+    <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $page->immagine_evidenza }}" />
+    <meta property="og:title" content="{{ $page->meta }}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
