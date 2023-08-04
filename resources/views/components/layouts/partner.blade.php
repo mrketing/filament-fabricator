@@ -29,7 +29,7 @@
 
     <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $partner->image }}" />
     <meta property="og:title" content="{{ $partner->name }}" />
-    {{-- <meta property="og:description" content="{{ $partner->meta }}" /> --}}
+    <meta property="og:description" content="{{ $partner->meta }}" />
     <meta property="og:url" content="{{ $partner->slug }}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
