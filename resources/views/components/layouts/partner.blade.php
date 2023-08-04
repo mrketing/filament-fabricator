@@ -71,7 +71,7 @@
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.end') }}
 </head>
 
-<body class="filament-fabricator-body">
+<body class="filament-fabricator-body sponsor single-sponsor">
     @include('partials.header')
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.start') }}
 
