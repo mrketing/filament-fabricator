@@ -5,11 +5,11 @@
 ])
 
 @php
-     $partners = DB::table('partners')
-            ->where('is_published', true)
+    $partners = DB::table('partners')
+        ->where('is_published', true)
 
-            ->orderBy('created_at', 'desc')
-            ->get();
+        ->orderBy('created_at', 'desc')
+        ->get();
 @endphp
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @foreach ($partners as $partner)
-    <meta content="{{ $meta ? "{$meta} - " : null }} {{ config('app.name') }}">
+        <meta content="{{ $meta ? "{$meta} - " : null }} {{ config('app.name') }}">
     @endforeach
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -71,7 +71,7 @@
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.end') }}
 </head>
 
-<body class="filament-fabricator-body sponsor single-sponsor">
+<body class="filament-fabricator-body sponsor single-sponsor" onload="initialize()">
     @include('partials.header')
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.start') }}
 
