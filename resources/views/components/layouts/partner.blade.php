@@ -8,7 +8,7 @@
     $partners = DB::table('partners')
         ->where('is_published', true)
 
-        ->orderBy('created_at', 'desc')
+        ->orderBy('order_column')
         ->get();
 @endphp
 
