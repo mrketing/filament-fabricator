@@ -1,16 +1,12 @@
 @props([
     'title' => null,
     'meta' => null,
+    'slug' => null,
+    'name' => null,
+    'image' => null,
     'dir' => 'ltr',
 ])
 
-@php
-    $partners = DB::table('partners')
-        ->where('is_published', true)
-
-        ->orderBy('order_column')
-        ->get();
-@endphp
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $dir }}" class="filament-fabricator">
@@ -25,10 +21,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-    <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $partner->image }}" />
-    <meta property="og:title" content="{{ $partner->name }}" />
-    <meta property="og:description" content="{{ $partner->meta }}" />
-    <meta property="og:url" content="{{ $partner->slug }}" />
+    <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $image }}" />
+    <meta property="og:title" content="{{ $name }}" />
+    <meta property="og:description" content="{{ $meta }}" />
+    <meta property="og:url" content="{{ $slug }}" /> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
