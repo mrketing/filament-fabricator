@@ -20,9 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @foreach ($partners as $partner)
-        <meta content="{{ $meta ? "{$meta} - " : null }} {{ config('app.name') }}">
-    @endforeach
+    {{-- <meta property="og:description" content="{{ $meta ? "{$meta} - " : null }} {{ config('app.name') }}"> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
