@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $image }}" />
-    <meta property="og:title" content="{{ $name }}" />
+    <meta property="og:title" content="{{ $name }} | Feralpisalò" />
     <meta property="og:description" content="{{ $meta }}" />
     <meta property="og:url" content="{{ $slug }}" /> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
