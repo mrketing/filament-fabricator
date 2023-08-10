@@ -35,13 +35,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon-32x32.png') }}" type="image/x-icon">
-    @foreach (\Filament\Facades\Filament::getMeta() as $tag)
-        {{ $tag }}
-    @endforeach
     @if ($favicon = \Z3d0X\FilamentFabricator\Facades\FilamentFabricator::getFavicon())
         <link rel="icon" href="{{ $favicon }}">
     @endif
-    <title>{{ $title ? "{$title} - " : null }} {{ config('app.name') }}</title>
+    <title>{{ $title ? "{$title} | " : null }} {{ config('app.name') }}</title>
 
 
 
