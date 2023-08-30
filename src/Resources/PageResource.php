@@ -81,7 +81,8 @@ class PageResource extends Resource
                                 'Settore giovanile' => 'Settore giovanile',
                                 'Società' => 'Società',
                                 'Biglietti' => 'Biglietti',
-                                'Partner' => 'Partner',
+                                'Marketing' => 'Marketing',
+                                'Comunicati' => 'Comunicati',
                                 'Progetti speciali' => 'Progetti speciali',
                             ])->required(),
 
