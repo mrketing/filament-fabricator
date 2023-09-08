@@ -163,6 +163,10 @@ class PageResource extends Resource
                                     ->imageResizeTargetWidth('1920')
                                     ->imageResizeTargetHeight('1920')
                                     ->imageResizeMode('contain'),
+                                FileUpload::make('immagine_verticale')->image()->label('Immagine verticale (Risoluzione massima consigliata 1080x1920) ')->required()
+                                    ->imageResizeTargetWidth('1920')
+                                    ->imageResizeTargetHeight('1920')
+                                    ->imageResizeMode('contain'),
                             ]),
 
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('sidebar.after')),
