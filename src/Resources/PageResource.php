@@ -73,16 +73,16 @@ class PageResource extends Resource
                         TextInput::make('sottotitolo')->required(),
 
 
-                        
+
 
                         Select::make('categoria')
                             ->options([
                                 'Prima squadra' => 'Prima squadra',
                                 'Settore giovanile' => 'Settore giovanile',
-                                'Società' => 'Società',
-                                'Biglietti' => 'Biglietti',
-                                'Marketing' => 'Marketing',
-                                'Comunicati' => 'Comunicati',
+                                'Eventi' => 'Eventi',
+                                'Ticketing' => 'Ticketing',
+                                'Merchandising' => 'Merchandising',
+                                'Comunicati' => 'Comunicati ufficiali',
                                 'Progetti speciali' => 'Progetti speciali',
                             ])->required(),
 
