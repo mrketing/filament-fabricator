@@ -21,10 +21,12 @@
     <meta property="og:title" content="{{ $title }} | Feralpisalò" />
     <meta property="og:description" content="{{ $meta }}" />
     <meta property="og:url" content="{{ $slug }}" />
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
-    <link rel="stylesheet" href="https://use.typekit.net/wvg4ncf.css">
+    <link rel="stylesheet" href="https://use.typekit.net/ldm7ubr.css">
     @vite(['resources/sass/_mediaqueries.scss', 'resources/sass/bootstrap/_functions.scss', 'resources/sass/_variables.scss', 'resources/css/app.css', 'resources/sass/app.scss', 'resources/css/fontawesome.min.css', 'resources/js/app.js', 'resources/js/custom.js', 'resources/css/bootstrap-grid.css'])
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.start') }}
     <meta charset="utf-8">
@@ -40,7 +42,7 @@
     <title>{{ $title ? "{$title} - " : null }} {{ config('app.name') }}</title>
 
 
-    
+
     <style>
         [x-cloak=""],
         [x-cloak="x-cloak"],
