@@ -30,6 +30,9 @@
     @vite(['resources/sass/_mediaqueries.scss', 'resources/sass/bootstrap/_functions.scss', 'resources/sass/_variables.scss', 'resources/css/app.css', 'resources/sass/app.scss', 'resources/css/fontawesome.min.css', 'resources/js/app.js', 'resources/js/custom.js', 'resources/css/bootstrap-grid.css'])
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.start') }}
     <meta charset="utf-8">
+      <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('assets/favicon/favicon-32x32.png') }}" type="image/x-icon">
