@@ -223,8 +223,9 @@ class PageResource extends Resource
             ])
             ->bulkActions([
                 DeleteBulkAction::make()
-            ]);
-    }
+            ])
+            ->defaultSort('published_at', 'desc');
+        }
 
     public static function getLabel(): string
     {

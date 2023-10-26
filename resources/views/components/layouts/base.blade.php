@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $immagine_evidenza }}" />
+    <meta property="og:image" content="https://www.feralpisalo.it/storage/{{ $immagine_evidenza }}" />
     <meta property="og:title" content="{{ $title }} | Feralpisalò" />
     <meta property="og:description" content="{{ $meta }}" />
     <meta property="og:url" content="{{ $slug }}" />
@@ -65,9 +65,21 @@
     @endforeach
 
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.head.end') }}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-22PZ1NCRM1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-22PZ1NCRM1');
+    </script>
 </head>
 
 <body class="filament-fabricator-body">
+ <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v18.0" nonce="AJslhJKC"></script>
     @include('partials.header')
     {{ \Filament\Facades\Filament::renderHook('filament-fabricator.body.start') }}
 
