@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:image" content="https://www.feralpisalo.it/storage/{{ $immagine_evidenza }}" />
+    <meta property="og:image" content="https://feralpisalo.demo.wprecovery.com/storage/{{ $immagine_evidenza }}" />
     <meta property="twitter:image" content="https://feralpisalo.demo.wprecovery.com/storage/{{ $immagine_evidenza }}" />
     <meta property="og:title" content="{{ $title }} | Feralpisalò" />
     <meta property="og:description" content="{{ $meta }}" />
