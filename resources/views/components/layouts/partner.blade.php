@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <meta property="og:image" content="https://feralpisalo.demo.misterketing.it/storage/{{ $image }}" />
-    <meta property="og:title" content="{{ $name }} | Feralpisalò" />
+    <meta property="og:title" content="{{ $name }} | Union Brescia" />
     <meta property="og:description" content="{{ $meta }}" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
