@@ -20,7 +20,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:image" content="{{ $_ENV['APP_URL'] }}/storage/{{ $immagine_evidenza }}" />
     <meta property="twitter:image" content="{{ $_ENV['APP_URL'] }}/storage/{{ $immagine_evidenza }}" />
-    <meta property="og:title" content="{{ $title }} | Feralpisalò" />
+    <meta property="og:title" content="{{ $title }} | Union Brescia" />
     <meta property="og:description" content="{{ $meta }}" />
     <meta property="og:url" content="{{ $slug }}" />
     
