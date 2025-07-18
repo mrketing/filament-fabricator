@@ -64,7 +64,7 @@ class PageResource extends Resource
                     ->schema([
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('blocks.before')),
 
-                        TextInput::make('title')->required()->maxLength(65)->label('Titolo')->reactive()->label('Titolo (massimo 65 caratteri spazi inclusi)')
+                        TextInput::make('title')->required()->maxLength(65)->label('Titolo')->reactive()->label('Titolo (massimo 6 5 caratteri spazi inclusi)')
                             ->afterStateUpdated(function (Closure $set, $state) {
                                 $set('slug', Str::slug($state));
                             })->required(),
