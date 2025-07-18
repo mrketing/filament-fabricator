@@ -103,9 +103,9 @@ class PageResource extends Resource
 
                         Card::make()
                             ->schema([
-                                // Placeholder::make('page_url')
-                                //     ->visible(fn (?PageContract $record) => config('filament-fabricator.routing.enabled') && filled($record))
-                                //     ->content(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record?->id)),
+                                Placeholder::make('page_url')
+                                    ->visible(fn (?PageContract $record) => config('filament-fabricator.routing.enabled', true) && filled($record))
+                                    ->content(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record?->id)),
 
                                 Select::make('autore')
                                     ->options([
@@ -167,6 +167,29 @@ class PageResource extends Resource
                                     ->imageResizeTargetWidth('1920')
                                     ->imageResizeTargetHeight('1920')
                                     ->imageResizeMode('contain'),
+
+                                Select::make('layout')
+                                    ->label('Layout')
+                                    ->options([
+                                        'default' => 'Default',
+                                        'partner' => 'Partner',
+                                    ])
+                                    ->default('default')
+                                    ->required(),
+
+                                Select::make('parent_id')
+                                    ->label('Articolo padre')
+                                    ->relationship('parent', 'title')
+                                    ->searchable()
+                                    ->placeholder('Seleziona un articolo padre (opzionale)'),
+
+                                DateTimePicker::make('evidence_at')
+                                    ->label('Data di evidenza')
+                                    ->placeholder('Data in cui l\'articolo sarà in evidenza'),
+
+                                Hidden::make('is_slug_changed_manually')
+                                    ->default(false)
+                                    ->dehydrated(false),
                             ]),
 
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('sidebar.after')),
@@ -242,8 +265,7 @@ class PageResource extends Resource
             ->bulkActions([
                 DeleteBulkAction::make()
             ])
-            ->defaultSort('updated_at', 'desc')
-            ->modifyQueryUsing(fn (Builder $query) => $query->orderBy('updated_at', 'desc'))
+            ->defaultSort('id', 'desc')
             ->filters([
                 SelectFilter::make('is_published')
                     ->label('Stato')
