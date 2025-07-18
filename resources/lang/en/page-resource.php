@@ -7,7 +7,6 @@ return [
         'page' => 'Articolo',
         'pages' => 'Articoli',
         'parent' => 'Parent',
-        'select_parent' => 'Seleziona un\'opzione',
         'slug' => 'Slug',
         'title' => 'Title',
         'categoria' => 'Categoria',

@@ -64,16 +64,16 @@ class PageResource extends Resource
                     ->schema([
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('blocks.before')),
 
-                        TextInput::make('title')->required()->maxLength(65)->label('Titolo')->reactive()->label('Titolo (massimo 6 5 caratteri spazi inclusi)')
+                        TextInput::make('title')->required()->maxLength(65)->label('Titolo')->reactive()->label('Titolo (massimo 65 caratteri spazi inclusi)')
                             ->afterStateUpdated(function (Closure $set, $state) {
                                 $set('slug', Str::slug($state));
                             })->required(),
 
-                        TextInput::make('titolo')->required()->maxLength(65)->label('Titolo originale')->reactive(),
 
                         TextInput::make('sottotitolo')->required(),
 
-                        RichEditor::make('paragrafo')->label('Paragrafo principale'),
+
+
 
                         Select::make('categoria')
                             ->options([
@@ -115,7 +115,6 @@ class PageResource extends Resource
 
                                 DateTimePicker::make('published_at')->label('Data e ora di pubblicazione')->required(),
 
-                                DateTimePicker::make('evidence_at')->label('Data e ora di evidenza'),
 
                                 TagsInput::make('tag')->label('Tag')->separator(','),
 
@@ -160,24 +159,6 @@ class PageResource extends Resource
 
                                 Toggle::make('is_published')->label('Attivo'),
                                 Toggle::make('is_evidence')->label('In Evidenza'),
-                                
-                                Select::make('layout')
-                                    ->label(__('filament-fabricator::page-resource.labels.layout'))
-                                    ->options(FilamentFabricator::getLayouts())
-                                    ->default('default')
-                                    ->required(),
-                                    
-                                Select::make('parent_id')
-                                    ->label(__('filament-fabricator::page-resource.labels.parent'))
-                                    ->options(function () {
-                                        return FilamentFabricator::getPageModel()::query()
-                                            ->whereNull('parent_id')
-                                            ->pluck('title', 'id')
-                                            ->toArray();
-                                    })
-                                    ->searchable()
-                                    ->placeholder(__('filament-fabricator::page-resource.labels.select_parent')),
-                                    
                                 FileUpload::make('immagine_evidenza')->image()->label('Immagine rilevanza (Risoluzione massima consigliata 1920x1080) ')->required()
                                     ->imageResizeTargetWidth('1920')
                                     ->imageResizeTargetHeight('1920')
@@ -214,7 +195,7 @@ class PageResource extends Resource
                     ->toggleable()
                     ->getStateUsing(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null)
                     ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
-                    ->visible(config('filament-fabricator.routing.enabled', true)),
+                    ->visible(config('filament-fabricator.routing.enabled')),
 
                 TextColumn::make('categoria'),
 
@@ -238,7 +219,7 @@ class PageResource extends Resource
                     ->icon('heroicon-o-external-link')
                     ->openUrlInNewTab()
                     ->color('success')
-                    ->visible(config('filament-fabricator.routing.enabled', true)),
+                    ->visible(config('filament-fabricator.routing.enabled')),
             ])
             ->bulkActions([
                 DeleteBulkAction::make()
