@@ -22,9 +22,8 @@ class Page extends Model implements Contract
     protected $fillable = [
         'slug',
         'blocks',   
-        'titolo',
+        'title',
         'sottotitolo',
-        'paragrafo',
         'meta',
         'published_at',
         'evidence_at',
@@ -35,11 +34,18 @@ class Page extends Model implements Contract
         'parent_id',
         'is_published',
         'is_evidence',
+        'immagine_evidenza',
+        'immagine_verticale',
     ];
 
     protected $casts = [
         'blocks' => 'array',
+        'tag' => 'array',
         'parent_id' => 'integer',
+        'published_at' => 'datetime',
+        'evidence_at' => 'datetime',
+        'is_published' => 'boolean',
+        'is_evidence' => 'boolean',
     ];
 
     protected static function booted()

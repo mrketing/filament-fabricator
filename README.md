@@ -42,9 +42,10 @@ git clone https://github.com/mrketing/filament-fabricator
 cd {{ release }}
 php artisan route:cache
 
-# Comandi aggiuntivi per pulire la cache
+# Comandi aggiuntivi per pulire la cache e aggiornare il database
 php artisan view:clear
 php artisan optimize:clear
+php artisan migrate --force
 ```
 
 ## License

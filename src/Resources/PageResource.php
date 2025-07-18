@@ -185,9 +185,16 @@ class PageResource extends Resource
                     ->sortable(),
 
                 TextColumn::make('published_at')
-                    ->label(__('Data di publicazione'))
-                    ->searchable()
-                    ->sortable(),
+                    ->label(__('Data di pubblicazione'))
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non pubblicato'),
+
+                TextColumn::make('created_at')
+                    ->label(__('Data di creazione'))
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
 
                 TextColumn::make('url')
@@ -224,7 +231,22 @@ class PageResource extends Resource
             ->bulkActions([
                 DeleteBulkAction::make()
             ])
-            ->defaultSort('published_at', 'desc');
+            ->defaultSort('created_at', 'desc')
+            ->filters([
+                SelectFilter::make('is_published')
+                    ->label('Stato')
+                    ->options([
+                        '1' => 'Pubblicati',
+                        '0' => 'Non pubblicati',
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return match ($data['value']) {
+                            '1' => $query->where('is_published', true),
+                            '0' => $query->where('is_published', false),
+                            default => $query,
+                        };
+                    }),
+            ]);
         }
 
     public static function getLabel(): string
