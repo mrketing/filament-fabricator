@@ -195,7 +195,7 @@ class PageResource extends Resource
                     ->toggleable()
                     ->getStateUsing(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null)
                     ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
-                    ->visible(true),
+                    ->visible(config('filament-fabricator.routing.enabled')),
 
                 TextColumn::make('categoria'),
 
@@ -219,7 +219,7 @@ class PageResource extends Resource
                     ->icon('heroicon-o-external-link')
                     ->openUrlInNewTab()
                     ->color('success')
-                    ->visible(true),
+                    ->visible(config('filament-fabricator.routing.enabled')),
             ])
             ->bulkActions([
                 DeleteBulkAction::make()
