@@ -69,11 +69,11 @@ class PageResource extends Resource
                                 $set('slug', Str::slug($state));
                             })->required(),
 
+                        TextInput::make('titolo')->required()->maxLength(65)->label('Titolo originale')->reactive(),
 
                         TextInput::make('sottotitolo')->required(),
 
-
-
+                        RichEditor::make('paragrafo')->label('Paragrafo principale'),
 
                         Select::make('categoria')
                             ->options([
@@ -115,6 +115,7 @@ class PageResource extends Resource
 
                                 DateTimePicker::make('published_at')->label('Data e ora di pubblicazione')->required(),
 
+                                DateTimePicker::make('evidence_at')->label('Data e ora di evidenza'),
 
                                 TagsInput::make('tag')->label('Tag')->separator(','),
 

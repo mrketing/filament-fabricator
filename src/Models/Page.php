@@ -22,6 +22,7 @@ class Page extends Model implements Contract
     protected $fillable = [
         'slug',
         'blocks',   
+        'title',
         'titolo',
         'sottotitolo',
         'paragrafo',
@@ -35,6 +36,8 @@ class Page extends Model implements Contract
         'parent_id',
         'is_published',
         'is_evidence',
+        'immagine_evidenza',
+        'immagine_verticale',
     ];
 
     protected $casts = [
