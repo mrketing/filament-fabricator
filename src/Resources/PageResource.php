@@ -201,6 +201,12 @@ class PageResource extends Resource
                     ->sortable()
                     ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non disponibile'),
 
+                TextColumn::make('updated_at')
+                    ->label(__('Ultima modifica'))
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non disponibile'),
+
 
                 TextColumn::make('url')
                     ->label(__('filament-fabricator::page-resource.labels.url'))
@@ -236,7 +242,8 @@ class PageResource extends Resource
             ->bulkActions([
                 DeleteBulkAction::make()
             ])
-            ->defaultSort('id', 'desc')
+            ->defaultSort('updated_at', 'desc')
+            ->modifyQueryUsing(fn (Builder $query) => $query->orderBy('updated_at', 'desc'))
             ->filters([
                 SelectFilter::make('is_published')
                     ->label('Stato')

@@ -46,6 +46,8 @@ class Page extends Model implements Contract
         'parent_id' => 'integer',
         'published_at' => 'datetime',
         'evidence_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'is_published' => 'boolean',
         'is_evidence' => 'boolean',
     ];
@@ -56,6 +58,13 @@ class Page extends Model implements Contract
             if (empty($page->created_at)) {
                 $page->created_at = now();
             }
+            if (empty($page->updated_at)) {
+                $page->updated_at = now();
+            }
+        });
+
+        static::updating(function ($page) {
+            $page->updated_at = now();
         });
 
         static::saved(fn () => Cache::forget('filament-fabricator::page-urls'));
