@@ -28,7 +28,7 @@ class EditPage extends EditRecord
                 ->icon('heroicon-o-external-link')
                 ->openUrlInNewTab()
                 ->color('success')
-                ->visible(fn () => (bool) config('filament-fabricator.routing.enabled', true)),
+                ->visible(config('filament-fabricator.routing.enabled')),
             Action::make('save')
                 ->action('save')
                 ->label(__('filament::resources/pages/edit-record.form.actions.save.label')),

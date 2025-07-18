@@ -36,7 +36,6 @@ use Illuminate\Validation\Rules\Unique;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Forms\Components\PageBuilder;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
-use Z3d0X\FilamentFabricator\Models\Page;
 use Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
 
@@ -55,73 +54,124 @@ class PageResource extends Resource
     }
     public static function form(Form $form): Form
     {
+
+        // Nvan
+
         return $form
+            ->columns(3)
             ->schema([
-                // Campi esistenti
-                TextInput::make('title')
-                    ->required()
-                    ->label(__('filament-fabricator::page-resource.labels.title')),
-                
-                TextInput::make('slug')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->label(__('filament-fabricator::page-resource.labels.slug')),
-                
-                // AGGIUNGI QUESTI CAMPI MANCANTI:
-                TextInput::make('sottotitolo')
-                    ->label('Sottotitolo')
-                    ->default(''),
-                    
-                TextInput::make('meta')
-                    ->label('Meta')
-                    ->default(''),
-                    
-                TextInput::make('categoria')
-                    ->label('Categoria')
-                    ->default(''),
-                    
-                TextInput::make('tag')
-                    ->label('Tag')
-                    ->default(''),
-                    
-                DateTimePicker::make('published_at')
-                    ->label('Data di pubblicazione')
-                    ->default(now()),
-                    
-                FileUpload::make('immagine_evidenza')
-                    ->label('Immagine in evidenza')
-                    ->image()
-                    ->directory('pages/featured'),
-                    
-                FileUpload::make('immagine_verticale')
-                    ->label('Immagine verticale')
-                    ->image()
-                    ->directory('pages/vertical')
-                    ->nullable(),
-                    
-                Select::make('layout')
-                    ->options(FilamentFabricator::getLayouts())
-                    ->required()
-                    ->default('default')
-                    ->label(__('filament-fabricator::page-resource.labels.layout')),
-                    
-                Select::make('parent_id')
-                    ->options(Page::pluck('title', 'id'))
-                    ->searchable()
-                    ->label(__('filament-fabricator::page-resource.labels.parent')),
-                    
-                Toggle::make('is_published')
-                    ->label('Pubblicato')
-                    ->default(false),
-                    
-                Toggle::make('is_evidence')
-                    ->label('In evidenza')
-                    ->default(false),
-                    
-                // Page Builder (campo esistente)
-                PageBuilder::make('blocks')
-                    ->label(__('filament-fabricator::page-resource.labels.blocks'))
-                    ->blocks(FilamentFabricator::getPageBlocks()),
+                Group::make()
+                    ->schema([
+                        Group::make()->schema(FilamentFabricator::getSchemaSlot('blocks.before')),
+
+                        TextInput::make('title')->required()->maxLength(65)->label('Titolo')->reactive()->label('Titolo (massimo 65 caratteri spazi inclusi)')
+                            ->afterStateUpdated(function (Closure $set, $state) {
+                                $set('slug', Str::slug($state));
+                            })->required(),
+
+
+                        TextInput::make('sottotitolo')->required(),
+
+
+
+
+                        Select::make('categoria')
+                            ->options([
+                                'Prima squadra' => 'Prima squadra',
+                                'Settore giovanile' => 'Settore giovanile',
+                                'Eventi' => 'Eventi',
+                                'Ticketing' => 'Ticketing',
+                                'Merchandising' => 'Merchandising',
+                                'Comunicati' => 'Comunicati ufficiali',
+                                'Progetti speciali' => 'Progetti speciali',
+                            ])->required(),
+
+
+                        MarkdownEditor::make('meta')->required()->maxLength(155)->label('Meta description (massimo 155 caratteri spazi inclusi)')->toolbarButtons([]),
+
+                        PageBuilder::make('blocks')
+                            ->label(__('filament-fabricator::page-resource.labels.blocks')),
+
+                        Group::make()->schema(FilamentFabricator::getSchemaSlot('blocks.after')),
+                    ])
+                    ->columnSpan(2),
+
+                Group::make()
+                    ->columnSpan(1)
+                    ->schema([
+                        Group::make()->schema(FilamentFabricator::getSchemaSlot('sidebar.before')),
+
+                        Card::make()
+                            ->schema([
+                                // Placeholder::make('page_url')
+                                //     ->visible(fn (?PageContract $record) => config('filament-fabricator.routing.enabled') && filled($record))
+                                //     ->content(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record?->id)),
+
+                                Select::make('autore')
+                                    ->options([
+                                        'Union Brescia Media house' => 'Union Brescia Media house',
+                                    ])->disabled()->default('Union Brescia Media house'),
+
+
+                                DateTimePicker::make('published_at')->label('Data e ora di pubblicazione')->required(),
+
+
+                                TagsInput::make('tag')->label('Tag')->separator(','),
+
+
+
+                                // Hidden::make('is_slug_changed_manually')
+                                //     ->default(false)
+                                //     ->dehydrated(false),
+
+
+
+                                // TextInput::make('slug')
+                                //  ->label(__('filament-fabricator::page-resource.labels.slug'))
+                                //   ->unique(ignoreRecord: true, callback: fn (Unique $rule, Closure $get) => $rule->where('parent_id', $get('parent_id'))),
+
+
+                                TextInput::make('slug')
+                                    ->label(__('filament-fabricator::page-resource.labels.slug'))
+                                    ->unique(ignoreRecord: true, callback: fn (Unique $rule, Closure $get) => $rule->where('parent_id', $get('parent_id')))
+                                    ->afterStateUpdated(function (Closure $set) {
+                                        $set('is_slug_changed_manually', true);
+                                    })
+                                    ->rule(function ($state) {
+                                        return function (string $attribute, $value, Closure $fail) use ($state) {
+                                            if ($state !== '/' && (Str::startsWith($value, '/') || Str::endsWith($value, '/'))) {
+                                                $fail(__('filament-fabricator::page-resource.errors.slug_starts_or_ends_with_slash'));
+                                            }
+                                        };
+                                    })
+                                    ->required(),
+                                //     ->afterStateUpdated(function (Closure $set) {
+                                //         $set('is_slug_changed_manually', true);
+                                //     })
+                                //     ->rule(function ($state) {
+                                //         return function (string $attribute, $value, Closure $fail) use ($state) {
+                                //             if ($state !== '/' && (Str::startsWith($value, '/') || Str::endsWith($value, '/'))) {
+                                //                 $fail(__('filament-fabricator::page-resource.errors.slug_starts_or_ends_with_slash'));
+                                //             }
+                                //         };
+                                //     })
+                                //     ->required(),
+
+                                Toggle::make('is_published')->label('Attivo'),
+                                Toggle::make('is_evidence')->label('In Evidenza'),
+                                FileUpload::make('immagine_evidenza')->image()->label('Immagine rilevanza (Risoluzione massima consigliata 1920x1080) ')->required()
+                                    ->imageResizeTargetWidth('1920')
+                                    ->imageResizeTargetHeight('1920')
+                                    ->imageResizeMode('contain'),
+                                FileUpload::make('immagine_verticale')->image()->label('Immagine verticale (Risoluzione massima consigliata 1080x1920) ')->required()
+                                    ->imageResizeTargetWidth('1920')
+                                    ->imageResizeTargetHeight('1920')
+                                    ->imageResizeMode('contain'),
+                            ]),
+
+                        Group::make()->schema(FilamentFabricator::getSchemaSlot('sidebar.after')),
+                    ]),
+
             ]);
     }
 
@@ -129,33 +179,15 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label(__('ID'))
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('title')
                     ->label(__('Titolo'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('published_at')
-                    ->label(__('Data di pubblicazione'))
-                    ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non pubblicato'),
-
-                TextColumn::make('created_at')
-                    ->label(__('Data di creazione'))
-                    ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non disponibile'),
-
-                TextColumn::make('updated_at')
-                    ->label(__('Ultima modifica'))
-                    ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non disponibile'),
+                    ->label(__('Data di publicazione'))
+                    ->searchable()
+                    ->sortable(),
 
 
                 TextColumn::make('url')
@@ -163,7 +195,7 @@ class PageResource extends Resource
                     ->toggleable()
                     ->getStateUsing(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null)
                     ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
-                    ->visible(fn () => (bool) config('filament-fabricator.routing.enabled', true)),
+                    ->visible(config('filament-fabricator.routing.enabled')),
 
                 TextColumn::make('categoria'),
 
@@ -187,27 +219,12 @@ class PageResource extends Resource
                     ->icon('heroicon-o-external-link')
                     ->openUrlInNewTab()
                     ->color('success')
-                    ->visible(fn () => (bool) config('filament-fabricator.routing.enabled', true)),
+                    ->visible(config('filament-fabricator.routing.enabled')),
             ])
             ->bulkActions([
                 DeleteBulkAction::make()
             ])
-            ->defaultSort('id', 'desc')
-            ->filters([
-                SelectFilter::make('is_published')
-                    ->label('Stato')
-                    ->options([
-                        '1' => 'Pubblicati',
-                        '0' => 'Non pubblicati',
-                    ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return match ($data['value']) {
-                            '1' => $query->where('is_published', true),
-                            '0' => $query->where('is_published', false),
-                            default => $query,
-                        };
-                    }),
-            ]);
+            ->defaultSort('published_at', 'desc');
         }
 
     public static function getLabel(): string

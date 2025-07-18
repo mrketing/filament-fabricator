@@ -10,8 +10,6 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page as Contract;
 
 class Page extends Model implements Contract
 {
-    public $timestamps = true;
-
     public function __construct(array $attributes = [])
     {
         if (blank($this->table)) {
@@ -24,8 +22,9 @@ class Page extends Model implements Contract
     protected $fillable = [
         'slug',
         'blocks',   
-        'title',
+        'titolo',
         'sottotitolo',
+        'paragrafo',
         'meta',
         'published_at',
         'evidence_at',
@@ -36,37 +35,15 @@ class Page extends Model implements Contract
         'parent_id',
         'is_published',
         'is_evidence',
-        'immagine_evidenza',
-        'immagine_verticale',
     ];
 
     protected $casts = [
         'blocks' => 'array',
-        'tag' => 'array',
         'parent_id' => 'integer',
-        'published_at' => 'datetime',
-        'evidence_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'is_published' => 'boolean',
-        'is_evidence' => 'boolean',
     ];
 
     protected static function booted()
     {
-        static::creating(function ($page) {
-            if (empty($page->created_at)) {
-                $page->created_at = now();
-            }
-            if (empty($page->updated_at)) {
-                $page->updated_at = now();
-            }
-        });
-
-        static::updating(function ($page) {
-            $page->updated_at = now();
-        });
-
         static::saved(fn () => Cache::forget('filament-fabricator::page-urls'));
         static::deleted(fn () => Cache::forget('filament-fabricator::page-urls'));
     }
