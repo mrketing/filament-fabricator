@@ -27,7 +27,7 @@ class ViewPage extends ViewRecord
                 ->icon('heroicon-o-external-link')
                 ->openUrlInNewTab()
                 ->color('success')
-                ->visible((bool) config('filament-fabricator.routing.enabled', true)),
+                ->visible(fn () => (bool) config('filament-fabricator.routing.enabled', true)),
         ];
     }
 }
