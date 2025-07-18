@@ -10,6 +10,8 @@ use Z3d0X\FilamentFabricator\Models\Contracts\Page as Contract;
 
 class Page extends Model implements Contract
 {
+    public $timestamps = true;
+
     public function __construct(array $attributes = [])
     {
         if (blank($this->table)) {
@@ -50,6 +52,12 @@ class Page extends Model implements Contract
 
     protected static function booted()
     {
+        static::creating(function ($page) {
+            if (empty($page->created_at)) {
+                $page->created_at = now();
+            }
+        });
+
         static::saved(fn () => Cache::forget('filament-fabricator::page-urls'));
         static::deleted(fn () => Cache::forget('filament-fabricator::page-urls'));
     }

@@ -179,6 +179,11 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label(__('ID'))
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('title')
                     ->label(__('Titolo'))
                     ->searchable()
@@ -194,7 +199,7 @@ class PageResource extends Resource
                     ->label(__('Data di creazione'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->formatStateUsing(fn ($state) => $state ? $state->format('d/m/Y H:i') : 'Non disponibile'),
 
 
                 TextColumn::make('url')
@@ -231,7 +236,7 @@ class PageResource extends Resource
             ->bulkActions([
                 DeleteBulkAction::make()
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('id', 'desc')
             ->filters([
                 SelectFilter::make('is_published')
                     ->label('Stato')
