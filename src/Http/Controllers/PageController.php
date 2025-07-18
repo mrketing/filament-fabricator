@@ -24,7 +24,7 @@ class PageController
         }
 
         /** @var ?class-string<Layout> $layout */
-        $layout = FilamentFabricator::getLayoutFromName($filamentFabricatorPage->layout ?? 'default');
+        $layout = FilamentFabricator::getLayoutFromName($filamentFabricatorPage->layout ?? 'base');
 
         if (! isset($layout)) {
             throw new \Exception("Filament Fabricator: Layout \"{$filamentFabricatorPage->layout}\" not found");
