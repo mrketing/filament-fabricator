@@ -133,7 +133,7 @@ class PageResource extends Resource
 
                                 TextInput::make('slug')
                                     ->label(__('filament-fabricator::page-resource.labels.slug'))
-                                    ->unique(ignoreRecord: true, callback: fn (Unique $rule, Closure $get) => $rule->where('parent_id', $get('parent_id')))
+                                    ->unique(ignoreRecord: true, callback: fn(Unique $rule, Closure $get) => $rule->where('parent_id', $get('parent_id')))
                                     ->afterStateUpdated(function (Closure $set) {
                                         $set('is_slug_changed_manually', true);
                                     })
@@ -193,9 +193,9 @@ class PageResource extends Resource
                 TextColumn::make('url')
                     ->label(__('filament-fabricator::page-resource.labels.url'))
                     ->toggleable()
-                    ->getStateUsing(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null)
-                    ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
-                    ->visible(config('filament-fabricator.routing.enabled') ?? true),
+                    ->getStateUsing(fn(?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null)
+                    ->url(fn(?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
+                    ->visible(config('filament-fabricator.routing.enabled')),
 
                 TextColumn::make('categoria'),
 
@@ -206,8 +206,8 @@ class PageResource extends Resource
                 TextColumn::make('parent.title')
                     ->label(__('filament-fabricator::page-resource.labels.parent'))
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->formatStateUsing(fn ($state) => $state ?? '-')
-                    ->url(fn (?PageContract $record) => filled($record->parent_id) ? PageResource::getUrl('edit', ['record' => $record->parent_id]) : null),
+                    ->formatStateUsing(fn($state) => $state ?? '-')
+                    ->url(fn(?PageContract $record) => filled($record->parent_id) ? PageResource::getUrl('edit', ['record' => $record->parent_id]) : null),
 
             ])
             ->actions([
@@ -215,17 +215,17 @@ class PageResource extends Resource
                 EditAction::make(),
                 Action::make('visit')
                     ->label(__('filament-fabricator::page-resource.actions.visit'))
-                    ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id, true) ?: null)
+                    ->url(fn(?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id, true) ?: null)
                     ->icon('heroicon-o-external-link')
                     ->openUrlInNewTab()
                     ->color('success')
-                    ->visible(config('filament-fabricator.routing.enabled') ?? true),
+                    ->visible(config('filament-fabricator.routing.enabled')),
             ])
             ->bulkActions([
                 DeleteBulkAction::make()
             ])
             ->defaultSort('published_at', 'desc');
-        }
+    }
 
     public static function getLabel(): string
     {
