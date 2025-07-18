@@ -159,6 +159,24 @@ class PageResource extends Resource
 
                                 Toggle::make('is_published')->label('Attivo'),
                                 Toggle::make('is_evidence')->label('In Evidenza'),
+                                
+                                Select::make('layout')
+                                    ->label(__('filament-fabricator::page-resource.labels.layout'))
+                                    ->options(FilamentFabricator::getLayouts())
+                                    ->default('default')
+                                    ->required(),
+                                    
+                                Select::make('parent_id')
+                                    ->label(__('filament-fabricator::page-resource.labels.parent'))
+                                    ->options(function () {
+                                        return FilamentFabricator::getPageModel()::query()
+                                            ->whereNull('parent_id')
+                                            ->pluck('title', 'id')
+                                            ->toArray();
+                                    })
+                                    ->searchable()
+                                    ->placeholder(__('filament-fabricator::page-resource.labels.select_parent')),
+                                    
                                 FileUpload::make('immagine_evidenza')->image()->label('Immagine rilevanza (Risoluzione massima consigliata 1920x1080) ')->required()
                                     ->imageResizeTargetWidth('1920')
                                     ->imageResizeTargetHeight('1920')
